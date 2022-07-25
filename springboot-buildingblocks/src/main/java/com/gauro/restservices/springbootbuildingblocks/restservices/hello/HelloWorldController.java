@@ -14,6 +14,12 @@ public class HelloWorldController {
         return "Hello World";
     }
 
+
+    @GetMapping("/helloworld1")
+    public String helloWorld1(){
+        return "Hello World1";
+    }
+
     @GetMapping("/helloworld-bean")
     public UserDetails helloWorldBean(){
         return UserDetails.builder()
