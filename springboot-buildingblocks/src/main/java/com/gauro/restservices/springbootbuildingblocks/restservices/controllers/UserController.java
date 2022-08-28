@@ -1,9 +1,16 @@
 package com.gauro.restservices.springbootbuildingblocks.restservices.controllers;
 
 import com.gauro.restservices.springbootbuildingblocks.restservices.entities.User;
+import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserExistsException;
+import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserNotFoundException;
 import com.gauro.restservices.springbootbuildingblocks.restservices.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,20 +35,37 @@ public class UserController {
     //@RequestBody Annotation
     //@PostMapping Annotation
     @PostMapping("/users")
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public ResponseEntity<Void> createUser(@RequestBody User user , UriComponentsBuilder builder){
+        try{
+            userService.createUser(user);
+            HttpHeaders headers=new HttpHeaders();
+            headers.setLocation(builder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
+            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+
+        }catch (UserExistsException ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+        }
+
     }
 
     //getUserById
     @GetMapping("/users/{id}")
     public Optional<User> getUserId(@PathVariable("id") Long id){
-        return userService.getUserById(id);
+        try {
+            return userService.getUserById(id);
+        } catch (UserNotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getMessage());
+        }
     }
 
     //updateUserById
     @PutMapping("/users/{id}")
     public User updateUserById(@PathVariable("id") Long id, @RequestBody User user){
-        return userService.updateUserById(id, user);
+        try {
+            return userService.updateUserById(id, user);
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
+        }
     }
 
     //deleteUserById
