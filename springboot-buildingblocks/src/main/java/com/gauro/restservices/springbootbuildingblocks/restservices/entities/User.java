@@ -3,6 +3,8 @@ package com.gauro.restservices.springbootbuildingblocks.restservices.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.validation.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -17,7 +19,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="user")
-public class User {
+public class User extends RepresentationModel<User> {
     @Id
     @GeneratedValue
     private Long id;

@@ -50,10 +50,10 @@ public class OrderController {
         order.setUser(user);
         return orderRepository.save(order);
     }
-    @GetMapping("/{userid}/orders/{orderid}")
-    public Order getOrderByOrderId(@PathVariable Long userid, @PathVariable Long orderid) throws UserNotFoundException {
+    @GetMapping("/{userid}/orders/{orderId}")
+    public Order getOrderByOrderId(@PathVariable Long userid, @PathVariable Long orderId) throws UserNotFoundException {
 
-        Optional<Order> orderOptional=orderRepository.findById(orderid);
+        Optional<Order> orderOptional=orderRepository.findById(orderId);
 
         if(orderOptional.isEmpty()){
             throw new UserNotFoundException("User not found !!! :(");
