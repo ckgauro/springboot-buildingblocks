@@ -24,6 +24,7 @@ import java.util.Optional;
  */
 @Validated
 @RestController
+@RequestMapping(value="/users")
 public class UserController {
 
     //Autowired the UserService
