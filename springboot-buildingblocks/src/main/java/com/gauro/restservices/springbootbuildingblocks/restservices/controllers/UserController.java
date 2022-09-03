@@ -2,6 +2,7 @@ package com.gauro.restservices.springbootbuildingblocks.restservices.controllers
 
 import com.gauro.restservices.springbootbuildingblocks.restservices.entities.User;
 import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserExistsException;
+import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserNameNotFoundException;
 import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserNotFoundException;
 import com.gauro.restservices.springbootbuildingblocks.restservices.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +82,10 @@ public class UserController {
 
     //getUserByUsername
     @GetMapping("/users/byusername/{username}")
-    public User getUserByUsername(@PathVariable("username") String username){
+    public User getUserByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
         User user=userService.getUserByUsername(username);
         if(user==null){
+            throw new UserNameNotFoundException("UserName :'"+username+"' not found in useer Repository");
            // throw new UserName
         }
         return userService.getUserByUsername(username);

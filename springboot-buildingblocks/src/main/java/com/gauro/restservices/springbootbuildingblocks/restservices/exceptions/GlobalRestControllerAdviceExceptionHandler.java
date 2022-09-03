@@ -11,7 +11,7 @@ import java.util.Date;
  * @author Chandra
  */
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalRestControllerAdviceExceptionHandler {
     @ExceptionHandler(UserNameNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

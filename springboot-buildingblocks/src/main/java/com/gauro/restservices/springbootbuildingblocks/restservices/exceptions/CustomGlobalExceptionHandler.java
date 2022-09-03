@@ -34,7 +34,7 @@ public class CustomGlobalExceptionHandler  extends ResponseEntityExceptionHandle
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         CustomErrorDetails customErrorDetails= CustomErrorDetails.builder()
                 .timestamp(new Date())
-                .errorDetails("From HttpRequestMethodNotSupportedException")
+                .errorDetails("From HttpRequestMethodNotSupportedException in GEH -Method Not Allowed")
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(customErrorDetails, HttpStatus.METHOD_NOT_ALLOWED);
@@ -42,6 +42,7 @@ public class CustomGlobalExceptionHandler  extends ResponseEntityExceptionHandle
     }
 
     // UserNameNotFoundException
+
     @ExceptionHandler(UserNameNotFoundException.class)
     public final ResponseEntity<Object> handleUserNameNotFoundException(UserNameNotFoundException ex, WebRequest request){
         CustomErrorDetails customErrorDetails=CustomErrorDetails.builder()
