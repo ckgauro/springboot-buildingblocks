@@ -42,6 +42,7 @@ public class User {
     @Column(name = "SSN", length = 50, nullable = false, unique = true)
     private String ssn;
 
+    //Here user is mapped By column name from Order table.
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
