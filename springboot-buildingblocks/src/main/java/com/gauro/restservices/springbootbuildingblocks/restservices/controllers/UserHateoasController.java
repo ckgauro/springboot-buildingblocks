@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -43,7 +44,6 @@ public class UserHateoasController {
 
     @GetMapping("/{id}")
     public EntityModel<User> getUserById(@PathVariable("id") @Min( 1) Long userid){
-
         try {
             Optional<User> userOptional=userService.getUserById(userid);
             if(userOptional.isEmpty()){
@@ -59,6 +59,26 @@ public class UserHateoasController {
         } catch (UserNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+
+    @GetMapping
+    public CollectionModel<EntityModel<User>> getAllUsers() {
+       // List<User> allUsers=userService.getAllUsers();
+        List<EntityModel<User>> items = userService.getAllUsers().stream().map(user -> {
+                    try {
+                        return EntityModel.of(user,
+                                        linkTo(methodOn(UserHateoasController.class).getUserById(user.getId())).withSelfRel(),
+                                        linkTo(methodOn(OrderHateoasController.class).getAllOrders(user.getId())).withRel("items"));
+                    } catch (UserNotFoundException e) {
+                        try {
+                            throw new UserNotFoundException("THere is something wrong ");
+                        } catch (UserNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                })
+                .collect(Collectors.toList());
+        return CollectionModel.of(items, linkTo(methodOn(UserHateoasController.class).getAllUsers()).withSelfRel());
 
     }
 }
