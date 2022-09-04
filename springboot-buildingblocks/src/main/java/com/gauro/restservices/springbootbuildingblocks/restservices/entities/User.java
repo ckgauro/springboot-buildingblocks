@@ -1,5 +1,7 @@
 package com.gauro.restservices.springbootbuildingblocks.restservices.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="user")
+@JsonIgnoreProperties({"firstname","lastname"})
 public class User extends RepresentationModel<User> {
     @Id
     @GeneratedValue
@@ -42,6 +45,7 @@ public class User extends RepresentationModel<User> {
     private String role;
 
     @Column(name = "SSN", length = 50, nullable = false, unique = true)
+    @JsonIgnore
     private String ssn;
 
     //Here user is mapped By column name from Order table.
