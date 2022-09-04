@@ -70,11 +70,8 @@ public class UserHateoasController {
                                         linkTo(methodOn(UserHateoasController.class).getUserById(user.getId())).withSelfRel(),
                                         linkTo(methodOn(OrderHateoasController.class).getAllOrders(user.getId())).withRel("items"));
                     } catch (UserNotFoundException e) {
-                        try {
-                            throw new UserNotFoundException("THere is something wrong ");
-                        } catch (UserNotFoundException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                            throw new RuntimeException("There is something wrong ");
+
                     }
                 })
                 .collect(Collectors.toList());
