@@ -5,6 +5,7 @@ import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.U
 import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserNameNotFoundException;
 import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserNotFoundException;
 import com.gauro.restservices.springbootbuildingblocks.restservices.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.Optional;
 /**
  * @author Chandra
  */
+@Slf4j
 @Validated
 @RestController
 @RequestMapping(value="/users")
@@ -34,7 +36,10 @@ public class UserController {
     //getAllUsers Method
    // @GetMapping("/users")
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers()
+    {
+        log.info("GetAll users====>");
+
         return userService.getAllUsers();
     }
 
