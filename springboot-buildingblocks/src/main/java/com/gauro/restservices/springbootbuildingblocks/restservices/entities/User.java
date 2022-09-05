@@ -52,6 +52,9 @@ public class User extends RepresentationModel<User> {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
+    @Column(name="address")
+    private String address;
+
     // No Argument Constructor
 
 }
