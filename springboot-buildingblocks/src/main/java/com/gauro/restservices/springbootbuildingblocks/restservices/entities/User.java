@@ -33,12 +33,11 @@ public class User extends RepresentationModel<User> {
     private Long id;
 
     @ApiModelProperty(notes = "username should be in format flname", example = "kreddy", required = false, position = 2)
-
-
     @NotEmpty(message="Username is Mandatory field. Please provide username")
     @Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
     private String username;
 
+    @ApiModelProperty(notes = "First name of the User.", example = "Kalyan", required = false, position = 3)
     @Size(min=2, message = "FirstName should have at least 2 characters")
     @Column(name = "FIRST_NAME", length = 50, nullable = false)
     private String firstname;
@@ -52,6 +51,7 @@ public class User extends RepresentationModel<User> {
     @Column(name = "ROLE", length = 50, nullable = false)
     private String role;
 
+    @ApiModelProperty(notes = "SSN of the User.", example = "SSN1010", required = true, position = 4)
     @Column(name = "SSN", length = 50, nullable = false, unique = true)
     @JsonIgnore
     private String ssn;
