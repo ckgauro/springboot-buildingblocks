@@ -5,6 +5,9 @@ import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.U
 import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserNameNotFoundException;
 import com.gauro.restservices.springbootbuildingblocks.restservices.exceptions.UserNotFoundException;
 import com.gauro.restservices.springbootbuildingblocks.restservices.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +26,7 @@ import java.util.Optional;
 /**
  * @author Chandra
  */
+@Api(tags = "User Management RESTful Services", value = "UserCotroller", description = "Controller for User Management Service" )
 @Slf4j
 @Validated
 @RestController
@@ -35,6 +39,7 @@ public class UserController {
 
     //getAllUsers Method
    // @GetMapping("/users")
+    @ApiOperation(value = "Retrieve list of users")
     @GetMapping
     public List<User> getAllUsers()
     {
@@ -47,8 +52,9 @@ public class UserController {
     //@RequestBody Annotation
     //@PostMapping Annotation
    // @PostMapping("/users")
+    @ApiOperation(value = "Creates a new user")
     @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody User user , UriComponentsBuilder builder){
+    public ResponseEntity<Void> createUser(@ApiParam("User information for a new user to be created.") @Valid @RequestBody User user , UriComponentsBuilder builder){
         try{
             userService.createUser(user);
             HttpHeaders headers=new HttpHeaders();

@@ -2,6 +2,8 @@ package com.gauro.restservices.springbootbuildingblocks.restservices.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,8 @@ import java.util.List;
 /**
  * @author Chandra
  */
+
+@ApiModel(description = "This model is to create a user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -23,9 +27,13 @@ import java.util.List;
 @Table(name="user")
 @JsonIgnoreProperties({"firstname","lastname"})
 public class User extends RepresentationModel<User> {
+    @ApiModelProperty(notes = " Auto generated unique id", required = true, position = 1)
     @Id
     @GeneratedValue
     private Long id;
+
+    @ApiModelProperty(notes = "username should be in format flname", example = "kreddy", required = false, position = 2)
+
 
     @NotEmpty(message="Username is Mandatory field. Please provide username")
     @Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
